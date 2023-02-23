@@ -43,6 +43,7 @@ app.event("app_mention", async ({event, say}) => {
     });
 
     const answer = await chat.sendMessage(question, {
+        timeoutMs : 5000,
         // Real-time update
         onProgress: async (answer) => {
             await updateMessage({
@@ -97,6 +98,7 @@ app.message(async ({message, say}) => {
             const answer = await chat.sendMessage(message.text, {
                 parentMessageId: previous.parentMessageId,
                 conversationId: previous.conversationId,
+                timeoutMs : 5000,
                 onProgress: async (answer) => {
                     // Real-time update
                     answerText = answer.text;
