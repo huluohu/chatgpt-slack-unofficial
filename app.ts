@@ -5,7 +5,8 @@ import debounce from 'debounce-promise';
 
 const chat = new ChatGPTUnofficialProxyAPI({
     accessToken: process.env.OPENAI_ACCESS_TOKEN!,
-    apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
+    // apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
+    apiReverseProxyUrl: 'https://gpt.pawan.krd/backend-api/conversation',
     debug: true
 })
 
