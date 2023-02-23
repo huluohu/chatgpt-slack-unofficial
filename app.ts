@@ -2,22 +2,10 @@ import {APIGatewayProxyHandler} from 'aws-lambda';
 import Slack from '@slack/bolt'
 import {ChatGPTUnofficialProxyAPI} from "chatgpt";
 import debounce from 'debounce-promise';
-// import {Chat} from './chat'
 
-// const api = new ChatGPTAPI({
-//     apiKey: process.env.OPENAI_API_KEY!,
-//     maxResponseTokens: process.env.MAX_RESPONSE_TOKEN ? Number(process.env.MAX_RESPONSE_TOKEN) : 1000,
-//     completionParams : {
-//         temperature : process.env.TEMPERATURE ? Number(process.env.TEMPERATURE) : 0.9
-//
-//     },
-//     debug: true
-// })
-
-
-
-const api = new ChatGPTUnofficialProxyAPI({
+const chat = new ChatGPTUnofficialProxyAPI({
     accessToken: process.env.OPENAI_ACCESS_TOKEN!,
+    apiReverseProxyUrl: process.env.API_REVERSE_PROXY_URL,
     debug: true
 })
 
@@ -53,7 +41,7 @@ app.event("app_mention", async ({event, say}) => {
         text: ':thought_balloon:',
     });
 
-    const answer = await api.sendMessage(question, {
+    const answer = await chat.sendMessage(question, {
         // Real-time update
         onProgress: async (answer) => {
             await updateMessage({
@@ -105,7 +93,7 @@ app.message(async ({message, say}) => {
 
         let answerText = "";
         try {
-            const answer = await api.sendMessage(message.text, {
+            const answer = await chat.sendMessage(message.text, {
                 parentMessageId: previous.parentMessageId,
                 conversationId: previous.conversationId,
                 onProgress: async (answer) => {
