@@ -1,6 +1,6 @@
 import {APIGatewayProxyHandler} from 'aws-lambda';
 import Slack from '@slack/bolt'
-import {ChatGPTAPI, ChatGPTUnofficialProxyAPI} from "chatgpt";
+import {ChatGPTUnofficialProxyAPI} from "chatgpt";
 import debounce from 'debounce-promise';
 // import {Chat} from './chat'
 

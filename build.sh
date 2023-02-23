@@ -27,13 +27,13 @@ echo "平台架构：$p"
 is_local="y"
 if [ "$l" == "$is_local" ]; then
     echo "开始构建本地镜像，忽略参数v=$v"
-    docker buildx build -t fooololo/chatgpt-slack-bot:latest --platform $p --load .
+    docker buildx build -t fooololo/chatgpt-slack-unofficial:latest --platform $p --load .
 else
     echo "开始构建并推送镜像,版本：$v"
-    docker buildx build -t fooololo/chatgpt-slack-bot:$v --platform linux/amd64,linux/arm64 --push .
+    docker buildx build -t fooololo/chatgpt-slack-unofficial:$v --platform linux/amd64,linux/arm64 --push .
 
     echo "开始构建并推送镜像,版本：latest"
-    docker buildx build -t fooololo/chatgpt-slack-bot:latest --platform linux/amd64,linux/arm64 --push .
+    docker buildx build -t fooololo/chatgpt-slack-unofficial:latest --platform linux/amd64,linux/arm64 --push .
 fi
 
 echo "构建镜像完成"
