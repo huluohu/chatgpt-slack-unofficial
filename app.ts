@@ -9,6 +9,7 @@ const chat = new ChatGPTUnofficialProxyAPI({
     apiReverseProxyUrl: 'https://gpt.pawan.krd/backend-api/conversation',
     debug: true
 })
+const openaiTimeout = process.env.OPENAI_TIME_OUT!;
 
 const awsLambdaReceiver = new Slack.AwsLambdaReceiver({
     signingSecret: process.env.SLACK_SIGNING_SECRET!,
@@ -43,7 +44,7 @@ app.event("app_mention", async ({event, say}) => {
     });
 
     const answer = await chat.sendMessage(question, {
-        timeoutMs : 5000,
+        timeoutMs : Number(openaiTimeout),
         // Real-time update
         onProgress: async (answer) => {
             await updateMessage({
@@ -98,7 +99,7 @@ app.message(async ({message, say}) => {
             const answer = await chat.sendMessage(message.text, {
                 parentMessageId: previous.parentMessageId,
                 conversationId: previous.conversationId,
-                timeoutMs : 5000,
+                timeoutMs : Number(openaiTimeout),
                 onProgress: async (answer) => {
                     // Real-time update
                     answerText = answer.text;
