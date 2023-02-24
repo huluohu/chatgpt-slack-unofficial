@@ -44,7 +44,7 @@ app.event("app_mention", async ({event, say}) => {
     });
 
     const answer = await chat.sendMessage(question, {
-        timeoutMs : Number(openaiTimeout),
+        timeoutMs: Number(openaiTimeout),
         // Real-time update
         onProgress: async (answer) => {
             await updateMessage({
@@ -96,20 +96,25 @@ app.message(async ({message, say}) => {
 
         let answerText = "";
         try {
+            // const answer = await chat.sendMessage(message.text, {
+            //     parentMessageId: previous.parentMessageId,
+            //     conversationId: previous.conversationId,
+            //     timeoutMs : Number(openaiTimeout),
+            //     onProgress: async (answer) => {
+            //         // Real-time update
+            //         answerText = answer.text;
+            //         await updateMessage({
+            //             channel: ms.channel,
+            //             ts: ms.ts,
+            //             text: answerText,
+            //             payload: answer,
+            //         });
+            //     }
+            // });
             const answer = await chat.sendMessage(message.text, {
                 parentMessageId: previous.parentMessageId,
                 conversationId: previous.conversationId,
-                timeoutMs : Number(openaiTimeout),
-                onProgress: async (answer) => {
-                    // Real-time update
-                    answerText = answer.text;
-                    await updateMessage({
-                        channel: ms.channel,
-                        ts: ms.ts,
-                        text: answerText,
-                        payload: answer,
-                    });
-                }
+                timeoutMs: Number(openaiTimeout)
             });
 
 
